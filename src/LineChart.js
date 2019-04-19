@@ -1,0 +1,353 @@
+import * as d3 from 'd3';
+import {ui_buttons} from './data';
+import{
+	nest, sum, select
+} from 'd3';
+
+
+function drawNormalisedLineChart(rootDOM,data){ 
+	
+	//get the width & height of DOM element
+	// console.group('dataInNormalisedFunction');
+	// console.log(data);
+	// console.groupEnd();
+
+
+	const W = rootDOM.clientWidth;
+	const H = rootDOM.clientHeight;
+	const margin = {t:10, r:10, b:20, l:20};
+	const w = W - margin.l - margin.r;
+	const h = H - margin.t - margin.b;
+	console.log(`${W}+${H}`);
+
+
+	//Set up scales
+	var scaleX = d3.scaleLinear()
+	   	.domain([2000,2017])
+	    .range([0,w])
+	var scaleY = d3.scaleLinear()
+		.domain([-30,25])
+		.range([h,0])
+	var color = d3.scaleOrdinal(d3.schemeSet3);
+	
+
+	//Add axes
+	const axisX = d3.axisBottom()
+			.scale(scaleX)
+			.ticks(19)
+			.tickFormat(function(value){ return "'"+String(value).slice(-2)})//pick the last two digits
+
+	const axisY = d3.axisLeft()
+			.scale(scaleY)
+			.tickSize(-w)//draw the grid line
+			.ticks(10)//the number of grid lines
+
+
+	//Set up a line generator
+	const lineGenerator = d3.line()
+		.x(d => {return scaleX(+d.year)})
+		.y(d => {return scaleY(+d.value_normalised)})
+		.curve(d3.curveBasis)
+	
+
+	//Append svg & g
+	const plot = d3.select(rootDOM)
+		.append('svg')
+		.attr('width',W)
+		.attr('height',H)
+		.append('g')
+		.attr('transform',`translate(${margin.l},${margin.t})`);
+	
+
+	//Add lines
+	var func = plot.selectAll('.function')
+		.data(data)
+		.enter()
+		.append('g')
+		.attr('class','function')
+		.attr('id',function(d){
+			return `funcc-${d.key}`
+		})
+
+	func.append('path')
+		.attr('class','line')
+		.attr('id',d => d.key)//give each line an id
+		.attr('d',function(d){return lineGenerator(d.values)})
+		.style('stroke','grey')
+	
+
+	//Add points
+	data.forEach(function(d,i){
+	var dots = func
+		.selectAll('.dot')
+		.data(function(d){
+			//console.log(d.values);
+			return d.values;
+		})
+		.enter()
+		.append('circle')
+		.attr('class','dot')
+		.attr('id',function(d,i){
+			return `dot${i}+${+d.year}`;
+		})
+		.attr('r',2)
+		.attr('cx',function(d){
+			return scaleX(+d.year)
+		})
+		.attr('cy',function(d){
+			return scaleY(+d.value_normalised)
+		})
+		.style('stroke','white')
+		.style('stroke-width','0.4px')
+		.style('fill','red')
+	})
+	
+	
+
+	//tooltip	
+	var tooltip = d3.select('.normalised-trend')
+		.append('div')
+		.attr('class','tooltip')
+		.style('opacity',0)
+
+
+	d3.selectAll('.line')
+		.on('click',function(d){
+			console.log(d.key);
+		})
+		.on('mouseover',function(d){
+			
+			d3.select(this)
+				.style('cursor','pointer')
+				.style('stroke',d => {
+					return d.values[0].colorCode})
+				.style('stroke-width','2px');
+
+			tooltip.transition()
+				.duration(200)
+				.style('opacity',1)
+
+			tooltip.html(function(){
+				
+				return "<strong>"  + "Budget Function: " + "</strong>" + "<span style='color:grey'>" + d.key 
+
+			})
+				.style('left',(d3.event.pageX) + 'px')
+				.style('top',(d3.event.pageY-30) + 'px')
+		})
+		.on('mouseout',mouseout);
+
+
+	function mouseout(){
+
+		d3.select(this)
+				.style('stroke','grey')
+				.style('stroke-width','0.4px');
+
+		tooltip.transition()
+			.duration(500)
+			.style('opacity',0)
+	}
+	
+	// function GetPropertyValue(object, dataToRetrieve) {
+	//     dataToRetrieve.split('.').forEach(function(token) {
+	//       if (object) object = object[token];
+	//     });
+    
+ //    	return object;
+	// }
+
+	
+
+	//Call Axes
+	plot.append('g')
+		.attr('class','axis axis-x')
+		.attr('transform',`translate(0,${h})`)
+		.call(axisX);
+
+	plot.append('g')
+		.attr('class','axis axis-y')
+		.call(axisY);
+
+
+
+
+}
+
+
+function drawActualLineChart(rootDOM,data){ 
+	//get the width & height of DOM element
+	// console.group('dataInActualFunction');
+	// console.log(data);
+	// console.groupEnd();
+
+	const W = rootDOM.clientWidth;
+	const H = rootDOM.clientHeight;
+	const margin = {t:10, r:10, b:20, l:25};
+	const w = W - margin.l - margin.r;
+	const h = H - margin.t - margin.b;
+	console.log(`${W}+${H}`);
+
+
+	// const extentValue = d3.extent(data[0].values, function(d){return d.value;});
+	// console.log('extentValueForYAxis');
+	// console.log(extentValue);
+
+
+	//Set up scales
+	var scaleX = d3.scaleLinear()
+	   	.domain([2000,2017])
+	    .range([0,w])
+	var scaleY = d3.scaleLinear()
+		.domain([-120,950])
+		.range([h,0])
+	var color = d3.scaleOrdinal(d3.schemeSet3);
+	
+
+	//Add axes
+	const axisX = d3.axisBottom()
+			.scale(scaleX)
+			.ticks(19)
+			.tickFormat(function(value){ return "'"+String(value).slice(-2)})//pick the last two digits
+
+	const axisY = d3.axisLeft()
+			.scale(scaleY)
+			.tickSize(-w)//draw the grid line
+			.ticks(10)//the number of grid lines
+
+
+	//Set up a line generator
+	const lineGenerator = d3.line()
+		.x(d => {return scaleX(+d.year)})
+		.y(d => {return scaleY(+d.value_actual)})
+		.curve(d3.curveBasis)
+	
+
+	//Append svg & g
+	const plot = d3.select(rootDOM)
+		.append('svg')
+		.attr('width',W)
+		.attr('height',H)
+		.append('g')
+		.attr('transform',`translate(${margin.l},${margin.t})`);
+	
+
+	//Add lines
+	var func = plot.selectAll('.function')
+		.data(data)
+		.enter()
+		.append('g')
+		.attr('class','function')
+
+	func.append('path')
+		.attr('class','line')
+		.attr('id',d => {
+			return `actual_${d.key}`})
+		.attr('d',function(d){return lineGenerator(d.values)})
+		.style('stroke','grey')
+	
+
+	//Call Axes
+	plot.append('g')
+		.attr('class','axis axis-x')
+		.attr('transform',`translate(0,${h})`)
+		.call(axisX);
+
+	plot.append('g')
+		.attr('class','axis axis-y')
+		.call(axisY);
+
+
+}
+
+
+function clickButton(data){
+
+	//Click 'Clear' 
+	d3.select('#clear').on('click',function(d){
+		console.log('click clear');
+		d3.selectAll('.line')
+			.style('stroke','grey')
+			.style('stroke-width','0.4px');
+	})
+
+	//Click each function button 
+	for(let i=0;i<ui_buttons.length;i++){
+		
+		var clickTimes = 0;
+
+		//select button with its id
+		d3.select(`#${ui_buttons[i].btn_id}`).on('click', function(){
+			
+			console.log(`click ${ui_buttons[i].btn_label}`);
+			//showLabel(data);
+			
+
+			// Determine if current line is visible
+			clickTimes++;
+
+			if(clickTimes%2 !== 0){
+
+				d3.select(`#${ui_buttons[i].line_key}`)//select the normalised line with its id
+				.style('stroke',d => {
+					console.log('color change');
+					console.log(d.values[0].colorCode);
+					return d.values[0].colorCode})
+				.style('stroke-width','2px');
+
+			}else{
+
+				d3.select(`#${ui_buttons[i].line_key}`)
+					.style('stroke','grey')
+					.style('stroke-width','0.4px');
+			}
+		
+		
+		})
+
+	}
+}
+
+
+function showLabel(data){
+	//Add a label to each line	
+	// d3.selectAll('.function')
+	// 	.append('text')
+	// 	.attr('transform',fucntion(d){
+	// 		return `translate(${scaleX(d.values[17].year)},${d.values[17].value})`
+	// 	})
+	// 	.attr('transform','translate(800,600)')
+	// 	.attr('dy','10px')
+	// 	.attr('text-anchor', 'start')
+	// 	.style('fill', function(d){
+	// 		return d.values[0].colorCode;
+	// 	})
+	// 	.text(d => d.functionName);
+
+
+	// d3.selectAll('.function')
+	// 	.datum(d => {return {
+			
+	// 		functionName:d.key,
+	// 		position:d.values[17]
+
+	// 		}
+	// 	})
+	// 	.enter()
+	// 	.append('text')
+	// 	.attr('transform',function(d){return `translate(${scaleX(d.position.year)},${scaleY(d.position.value)})`})
+	// 	.attr('x',3)
+	// 	.attr('dy','10px')
+	// 	.style('font-size','8pt')
+	// 	//.style('fill',function(d){return color(d.functionName)})
+	// 	.style('fill','grey')
+	// 	.text(d => d.functionName)
+}
+
+export {
+	drawNormalisedLineChart,
+	drawActualLineChart,
+	clickButton
+	//clickButton2
+};
+

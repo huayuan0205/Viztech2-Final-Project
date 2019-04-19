@@ -1,0 +1,20 @@
+﻿Function,Code,Color
+National_Defense,50,#800000
+International_Affairs,150,#e6194B
+General Science_Space_and_Technology,250,#f58231
+Energy,270,#ffe119
+Natural_Resources_and_Environment,300,#808000
+Agriculture,350,#3cb44b
+Commerce_and_Housing_Credit,370,#fabebe
+Transportation,400,#ffd8b1
+Community_and_Regional_Development,450,#bfef45
+Education_Training_Employment_and_Social_Services,500,#469990
+Health,550,#000075
+Medicare,570,#42d4f4
+Income_Security,600,#4363d8
+Social_Security,650,#911eb4
+Veterans_Benefits_and_Services,700,#f032e6
+Administration_of_Justice,750,#e6beff
+General_Government,800,#aaffc3
+Net_Interest,900,#9A6324
+Undistributed_Offsetting_Receipts,950,#a9a9a9
