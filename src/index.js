@@ -11,7 +11,6 @@ import {
 	drawNormalisedLineChart,
 	drawActualLineChart,
 	clickButton
-	//clickButton2
 } from './LineChart';
 
 import * as d3 from 'd3';
@@ -177,63 +176,8 @@ actualDataCombined.then(data => {
 		// })
 
 
-function dataFiltered(data){
-	
-	const filteredData = data.map(d => {
-		return{
-			year: d.year,
-			value: d.nmValue
-		}
-	})
-
-	return filteredData;
-	
-}
 
 
-
-
-
-
-
-//get the width and height of trend-container
-const W = d3.select('.trend-container').node().clientWidth;
-const H = d3.select('.trend-container').node().clientHeight;
-const margin = {t:10, r:20, b:20, l:10};
-const w = W - margin.l - margin.r;
-const h = H - margin.t - margin.b;
-
-
-//show the outline of svg-absolute-trend
-// const svgAbTrend = d3.select('.absolute-trend')
-// 	.append('svg')
-// 	.attr('width',W/2-10)
-// 	.attr('height',H-30)
-
-// const svgAbTrend_Path = svgAbTrend.append('rect')
-// 	.attr("x", 0)
-//     .attr("y", 0)
-// 	.attr('width',W/2-10)
-// 	.attr('height',H-30)
-// 	.style('fill','none')
-// 	.style('stroke','black')
-// 	.style('stroke-width',1);
-
-
-//show the outline of svg-normalized-trend
-// const svgNmTrend = d3.select('.normalised-trend')
-// 	.append('svg')
-// 	.attr('width',W/2-10)
-// 	.attr('height',H-30)
-
-// const svgNmTrend_Path = svgNmTrend.append('rect')
-// 	.attr("x", 0)
-//     .attr("y", 0)
-// 	.attr('width',W/2-10)
-// 	.attr('height',H-30)
-// 	.style('fill','none')
-// 	.style('stroke','black')
-// 	.style('stroke-width',1);
 
 
 //show the outline of svg-composition-container

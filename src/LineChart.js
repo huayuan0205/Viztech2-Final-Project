@@ -18,7 +18,7 @@ function drawNormalisedLineChart(rootDOM,data){
 	const margin = {t:10, r:10, b:20, l:20};
 	const w = W - margin.l - margin.r;
 	const h = H - margin.t - margin.b;
-	console.log(`${W}+${H}`);
+	//console.log(`${W}+${H}`);
 
 
 	//Set up scales
@@ -76,12 +76,12 @@ function drawNormalisedLineChart(rootDOM,data){
 		.style('stroke','grey')
 	
 
+
 	//Add points
 	data.forEach(function(d,i){
 	var dots = func
 		.selectAll('.dot')
 		.data(function(d){
-			//console.log(d.values);
 			return d.values;
 		})
 		.enter()
@@ -124,7 +124,7 @@ function drawNormalisedLineChart(rootDOM,data){
 				.style('stroke-width','2px');
 
 			tooltip.transition()
-				.duration(200)
+				.duration(100)
 				.style('opacity',1)
 
 			tooltip.html(function(){
@@ -145,7 +145,7 @@ function drawNormalisedLineChart(rootDOM,data){
 				.style('stroke-width','0.4px');
 
 		tooltip.transition()
-			.duration(500)
+			.duration(200)
 			.style('opacity',0)
 	}
 	
@@ -186,7 +186,6 @@ function drawActualLineChart(rootDOM,data){
 	const margin = {t:10, r:10, b:20, l:25};
 	const w = W - margin.l - margin.r;
 	const h = H - margin.t - margin.b;
-	console.log(`${W}+${H}`);
 
 
 	// const extentValue = d3.extent(data[0].values, function(d){return d.value;});
@@ -280,7 +279,6 @@ function clickButton(data){
 		d3.select(`#${ui_buttons[i].btn_id}`).on('click', function(){
 			
 			console.log(`click ${ui_buttons[i].btn_label}`);
-			//showLabel(data);
 			
 
 			// Determine if current line is visible
@@ -290,8 +288,8 @@ function clickButton(data){
 
 				d3.select(`#${ui_buttons[i].line_key}`)//select the normalised line with its id
 				.style('stroke',d => {
-					console.log('color change');
 					console.log(d.values[0].colorCode);
+
 					return d.values[0].colorCode})
 				.style('stroke-width','2px');
 
@@ -309,45 +307,10 @@ function clickButton(data){
 }
 
 
-function showLabel(data){
-	//Add a label to each line	
-	// d3.selectAll('.function')
-	// 	.append('text')
-	// 	.attr('transform',fucntion(d){
-	// 		return `translate(${scaleX(d.values[17].year)},${d.values[17].value})`
-	// 	})
-	// 	.attr('transform','translate(800,600)')
-	// 	.attr('dy','10px')
-	// 	.attr('text-anchor', 'start')
-	// 	.style('fill', function(d){
-	// 		return d.values[0].colorCode;
-	// 	})
-	// 	.text(d => d.functionName);
-
-
-	// d3.selectAll('.function')
-	// 	.datum(d => {return {
-			
-	// 		functionName:d.key,
-	// 		position:d.values[17]
-
-	// 		}
-	// 	})
-	// 	.enter()
-	// 	.append('text')
-	// 	.attr('transform',function(d){return `translate(${scaleX(d.position.year)},${scaleY(d.position.value)})`})
-	// 	.attr('x',3)
-	// 	.attr('dy','10px')
-	// 	.style('font-size','8pt')
-	// 	//.style('fill',function(d){return color(d.functionName)})
-	// 	.style('fill','grey')
-	// 	.text(d => d.functionName)
-}
 
 export {
 	drawNormalisedLineChart,
 	drawActualLineChart,
 	clickButton
-	//clickButton2
 };
 
