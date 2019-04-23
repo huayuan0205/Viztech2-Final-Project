@@ -1,0 +1,24 @@
+{
+  "name":"budget",
+  "children": [
+    {
+      "name":"National Defense",
+      "children": [
+        {"name":"Department of Defense-Military", "value":290308},
+        {"name":"Atomic energy defense activities", "value":12420},
+        {"name":"Defense-related activities", "value":1276}
+      ]
+    }
+    {
+      "name":"Internatioanl Affairs",
+      "children": [
+        {"name":"International development and humanitarian assistance", "value":6739},
+        {"name":"International security assistance", "value":7763},
+        {"name":"Conduct of foreign affairs", "value":5614},
+        {"name":"Foreign information and exchange activities", "value":770},
+        {"name":"International financial programs", "value":1756}
+      ]
+    }
+
+  ]
+}

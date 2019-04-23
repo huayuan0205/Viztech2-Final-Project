@@ -1,5 +1,6 @@
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.css';
+// import * as data from './budget_2000';
 import {
 	normalisedDataPromise,
 	colorCodePromise,
@@ -23,7 +24,6 @@ console.log('webpack2');
 
 
 
-
 //draw all the lines
 normalisedDataCombined.then(data => {
 		
@@ -40,140 +40,29 @@ actualDataCombined.then(data => {
 });
 
 
-//Interaction-Buttons
+// json.then(function(data){
 
-// d3.select('#btn-test')
-//         .selectAll('.button')
-//         .on('click', function() {
-
-//         	var currentColor = 'grey';
-//         	currentColor = currentColor=='grey'? function(d){return d.values[0].colorCode}:'grey';
-
-//             return{
-//             	d3.select(this)
-//             	.style('fill',currentColor);
-//             }
-//         })
-            
-
-
-//Click and Unclick
-// for(let i=0;i<ui_buttons.length;i++){
-
-// 		d3.select(`#${ui_buttons[i].id}`).on('click', function(){
-// 			console.log('ui_buttons[i].id');
-
-// 			var clickTimes = 0;
-		
-// 		// Determine if current line is visible
-// 			clickTimes++;
-
-// 			if(clickTimes%2 !== 0){
-// 				d3.select(`#${ui_buttons[i].id}`)//id of the line
-// 				.style('stroke',d => {
-// 					console.log('color channge');
-// 					console.log(d.values[0].colorCode);
-// 					return d.values[0].colorCode})
-// 				.style('stroke-width','2px');
-// 			}else{
-// 				d3.select(`#${ui_buttons[i].id}`)
-// 				.style('stroke','grey')
-// 				.style('stroke-width','0.4px');
-// 			}
-// 	})
-// }
+// 	console.log('Treemap data');
+// 	console.log(data);
 
 	
-	// const buttonSvg = d3.select('.btn-test')
-	// 	.append('svg')
-	// 	.attr('width',d3.select('.btn-toolbar').node().clientWidth)
-	// 	.attr('height',d3.select('.btn-toolbar').node().clientHeight)
-	// 	.style('background','lightblue')
+// 	const rootNode = d3.hierarchy(data)//return the data in a treemap structure
+// 		.sum(function(d){ return d.value });//calculate the value of leaves elements 
+// 	console.log('rootNode');
+// 	console.log(rootNode.descendants());//to get the nodes from the standardized data
 
-	// var buttonGroup = buttonSvg.selectAll('.button')
-	// 	.data(ui_buttons)
-	// 	.enter()
-	// 	.append('rect')
-	// 	.attr('class','button')
-	// 	.style('fill','red')
-		// .attr('id',function(d){
-		// 	return d.btn_id;
-		// 	console.log(d)
-		// })
-		// .style('background','red')
-		// .text(d => d.btn_label)
-		//.style('cursor','pointer')
+
+// 	renderTreemap(rootNode, d3.select('.composition-container').node());
+
+// })
+
+
+
 	
-		
-
-	// buttonGroup.on('click',function(d){
-	// 	console.log(d.btn_label);
-	// 	// d3.select(this)
-	// 	// 	.transition()
-	// 	// 	.style('background','red')
-	// 	// 	.style('color','white')
-		
-	// })
 
 
-	// var buttonSpace = 20;
-
-	// buttonGroup.append('rect')
-	// 	// .attr('width',buttonWidth)
-	// 	// .attr('height',buttonHeight)
-	// 	.attr('x',function(d,i){
-	// 		return (buttonWidth+buttonSpace)*i;
-	// 	})
-	// 	.attr('y',0);
-		
-	// buttonGroup.append('text')
-	// 	.attr('x',function(d,i){
-	// 		return (buttonWidth+buttonSpace)*i+buttonWidth/2;
-	// 	})
-	// 	.attr('y',buttonHeight/2)
-	// 	.attr('text-align','center')
-	// 	.text(d => d.label);
-
-
-	// const buttonsGroup = d3.select('.btn-toolbar')
-	// 	.selectAll('.button')
-	// 	.data(ui_buttons)
-	// 	// .append('svg')
-	// 	// .attr('width',d3.select('.btn-toolbar').node().clientWidth)
-	// 	// .attr('height',d3.select('.btn-toolbar').node().clientHeight)
 	
-	// buttonsGroup
-	// 	//.enter()
-	// 	.append('g')
-	// 	.attr('class','button')
-	// 	.attr('data-id',d => d.id)
-	// 	.style('stroke','red')
-	// 	.style('stroke-width','2px')
-	// 	.text(d => d.label)
-		// .on('click',function(d){
-
-		// 	var clickTimes = 0;
-		// 	d3.select(`#${d.id}`).on('click', function(){
-		// 		console.log('show ND');
-		// 		// Determine if current line is visible
-		// 		clickTimes++;
-
-		// 		if(clickTimesND%2 !== 0){
-		// 			d3.select(`#${d.id}`)//id of the line
-		// 			// .style('stroke',d => {
-		// 			// 	const colorOfThisLine = d.map(d.values,function(d){
-
-		// 			// 	})
-		// 			// 	})
-		// 			.style('stroke',d => d.colorCode)
-		// 			.style('stroke-width','2px');
-		// 		}else{
-		// 			d3.select(`#${d.id}`)
-		// 			.style('stroke','grey')
-		// 			.style('stroke-width','0.4px');
-		// 		}
-		// 	})
-		// })
+	
 
 
 

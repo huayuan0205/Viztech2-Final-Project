@@ -49,10 +49,6 @@ html,body,div{
 	color: #3C3C3B;
 }
 
-.btn-toolbar{
-	padding-top: 20px;
-}
-
 .trend-container{
 	padding-top:35px;
 	height: 460px;
@@ -89,16 +85,6 @@ html,body,div{
     shape-rendering: crispEdges;
 }
 
-.btn-space{
-	margin-right: 15px;
-	margin-top:10px;
-}
-
-.btn-test{
-	position: absolute;
-	height: 200px;
-}
-
 /*.button {
   min-width: 130px;
   padding: 5px 5px;
@@ -123,22 +109,26 @@ html,body,div{
   color: #fff;
 }*/
 
-.button {
-  width:auto;
-  margin:0 5px 0 5px;
-  height:35px;
-  fill:steelblue;
-  stroke: #999faa; 
-  stroke-width: 2px;
-  font-family:"Geneva",sans-serif;
-  font-size:10pt;
-  text-align: center;
+.btn-toolbar{
+	padding-top: 20px;
 }
 
-.button text{
+button.btn{
+  width:auto;
+  height:35px;
+  background-color:lightgrey;
+  color:grey;
+}
+
+
+.btn-space{
+	margin-right: 10px;
+	margin-top:10px;
+}
+
+.btn text{
 	font-family:"Geneva",sans-serif;
 	font-size:10pt;
-	fill:black;
 	text-align: center;
 }
 
@@ -156,4 +146,8 @@ div.tooltip {
   border-radius:5px;
   pointer-events: none;
 
+}
+
+.dot{
+	/*visibility: hidden;*/
 }
