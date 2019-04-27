@@ -79,6 +79,10 @@ html,body,div{
 	display: inline-block;
 }
 
+.amount{
+	display: inline-block;
+}
+
 .line{
   fill:none;
   stroke:grey;

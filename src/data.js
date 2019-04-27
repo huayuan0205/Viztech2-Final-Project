@@ -4,7 +4,7 @@ import {
 	parseActualData,
 	parseSubfunctionData
 } from './utils';
-import drawLineChart from './LineChart';
+import drawLineChart from './ViewModules/LineChart';
 import * as d3 from 'd3';
 import {
 	csv, nest, map

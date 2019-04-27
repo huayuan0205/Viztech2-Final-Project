@@ -6,7 +6,7 @@ import{
 import {
 	drawTreemap,
 	drawTreemap_sub
-} from './Treemap';
+} from './ViewModules/Treemap';
 
 
 var isSelected = false;
@@ -17,6 +17,8 @@ function clickButton(normalisedData,subfunctionData){
 	//Click 'Clear' 
 	d3.select('#clear').on('click',function(){
 		console.log('Clear');
+
+		drawTreemap(d3.select('.composition-container').node(),subfunctionData,2000);
 		
 		isSelected = false;
 
@@ -28,14 +30,9 @@ function clickButton(normalisedData,subfunctionData){
 			.style('background-color','rgb(211,211,211)')
 
 		selected_cata=[];
-		//console.log("selected_cata content",selected_cata);
 
 			
 	})
-
-
-	//Trigger the change in treemap - show subfunction
-	//drawTreemap_sub(d3.select('.composition-container').node(),subfunctionData,2000)
 
 
 	//Click each function button 
@@ -46,20 +43,13 @@ function clickButton(normalisedData,subfunctionData){
 			isSelected = true;
 		
 			console.log(`click ${ui_buttons[i].btn_label}`);
-			//console.log("selected_cata length",selected_cata.length)
+			
 			select("#button_holder").text(`${ui_buttons[i].btn_label}`);
 			selected_cata.push(`${ui_buttons[i].btn_label}`);
 
-			//console.log("selected_cata length",selected_cata.length);
-			//console.log("selected_cata content",selected_cata);
-
-			//var selected_year= select();
-
-			//.getElementsByClassName('form-control form-control-sm');
-			//var selected_year = container.options[container.selectedIndex].value;
-			//console.log("Selected Year from button: ",container);
 			var slt_yr = select("#years_holder").text();
 			console.log("test slt",slt_yr);
+
 			drawTreemap_sub(d3.select('.composition-container').node(),subfunctionData,slt_yr,selected_cata);
 
 

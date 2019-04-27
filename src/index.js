@@ -13,11 +13,11 @@ import clickButton from './button';
 import {
 	drawNormalisedLineChart,
 	drawActualLineChart
-} from './LineChart';
+} from './ViewModules/LineChart';
 import {
 	drawTreemap,
 	drawTreemap_sub
-} from './Treemap';
+} from './ViewModules/Treemap';
 import * as d3 from 'd3';
 import{
 	csv, nest, sum, select, keys
@@ -26,44 +26,6 @@ import{
 
 console.log('webpack2');
 const years = [];
-
-
-// //draw all the lines
-// normalisedDataCombined.then(data => {
-
-// 	drawNormalisedLineChart(d3.select('.normalised-trend').node(),data);
-// 	clickButton(data);
-
-// });
-
-
-// actualDataCombined.then(data => {
-		
-// 	drawActualLineChart(d3.select('.absolute-trend').node(),data);
-
-// });
-
-
-// subfunctionDataPromise.then(data => {
-
-// 	//console.log('datainsub',data);
-	
-// 	var dataByYear_func = nest()
-// 			.key(d => d.year)
-// 			.key(d => d.functionName)
-// 			.rollup(s => d3.sum(s, d => d.value_sub))
-// 			.entries(data)
-// 			.map(d => [+d.key, d.values]);
-	
-// 	dataByYear_func.forEach(function(d){
-// 		years.push(d[0])
-// 	})
-	
-// 	drawTreemap(d3.select('.composition-container').node(),data,2000);
-	
-// 	renderMenu(years,data);
-
-// });
 
 
 const allDataCombined = Promise.all([
@@ -133,26 +95,22 @@ function renderMenu(year,data){
 
 		selectedYear = this.value;
 
-		var year_tag= select("#years_holder").text(selectedYear);
-		console.log("check in function value",selectedYear);
+		//var year_tag = select("#years_holder").text(selectedYear);
+		//console.log("check in function value",selectedYear);
 		
-		drawTreemap(d3.select('.composition-container').node(),data,selectedYear)
+		// for(let i=0;i<ui_buttons.length;i++){
+		// 	d3.select(`#${ui_buttons[i].btn_id}`).on('click', function(){
 
-				
-	});
+		// 	if(d3.selectAll('.btn').style('background-color') === 'rgb(211,211,211)'){
+		// 		drawTreemap(d3.select('.composition-container').node(),data,selectedYear);
+		// 	}else{
+		// 		drawTreemap_sub(d3.select('.composition-container').node(),data,selectedYear,d3.select(`#${ui_buttons[i].btn_id}`).btn_label);
+		// 	}
+
+		// })
+		// }
+		drawTreemap(d3.select('.composition-container').node(),data,selectedYear);
+			
+	})
 
 }
-
-
-
-
-	
-
-
-	
-	
-
-
-
-
-

@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {ui_buttons} from './data';
+import {ui_buttons} from '../data';
 import{
 	nest, sum, select
 } from 'd3';
