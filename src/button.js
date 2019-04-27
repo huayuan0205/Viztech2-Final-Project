@@ -29,8 +29,6 @@ function clickButton(normalisedData,subfunctionData){
 		d3.selectAll('.btn')
 			.style('background-color','rgb(211,211,211)')
 
-		selected_cata=[];
-
 			
 	})
 
@@ -44,11 +42,11 @@ function clickButton(normalisedData,subfunctionData){
 		
 			console.log(`click ${ui_buttons[i].btn_label}`);
 			
-			select("#button_holder").text(`${ui_buttons[i].btn_label}`);
+			//select("#button_holder").text(`${ui_buttons[i].btn_label}`);
 			selected_cata.push(`${ui_buttons[i].btn_label}`);
 
-			var slt_yr = select("#years_holder").text();
-			console.log("test slt",slt_yr);
+			// var slt_yr = select("#years_holder").text();
+			// console.log("test slt",slt_yr);
 
 			drawTreemap_sub(d3.select('.composition-container').node(),subfunctionData,slt_yr,selected_cata);
 
