@@ -45,7 +45,7 @@ function clickButton(normalisedData,subfunctionData){
 			//select("#button_holder").text(`${ui_buttons[i].btn_label}`);
 			selected_cata.push(`${ui_buttons[i].btn_label}`);
 
-			// var slt_yr = select("#years_holder").text();
+			var slt_yr = select("#years_holder").text();
 			// console.log("test slt",slt_yr);
 
 			drawTreemap_sub(d3.select('.composition-container').node(),subfunctionData,slt_yr,selected_cata);
