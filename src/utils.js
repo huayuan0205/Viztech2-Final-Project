@@ -72,26 +72,48 @@ function parseNormalisedData(d){
 	}
 
 	return functionBudget;
-	// return functionBudget.reduce((acc,val)=>{
-	// 	return acc.concat(val);
-	// }, []);
+	
+}
+
+function parseSubfunctionData(d){
+
+	const subfunctionBudget = [];
+	const functionName = d.Function;
+	const subfunctionName = d.Subfunction
+	//const functionFullName = d['Show Name'];
+	
+
+	delete d.Function;
+	delete d['Function Code'];
+	delete d.Subfunction;
+	delete d['Subfunction Name'];
+	delete d['Subfunction Code'];
 
 
-	// return functionBudget.reduce((acc,val) => {
-	// // 	acc[functionName] = functionName,
-	// 	acc[val.year]=val.value;
-	// 	return acc;
-	// },{})
+	if(functionName === '') return;
 
-	//[
-	//	{functionName: "National Defense", year:"2000",value:1.00}
-	//		x18
-	//]
+
+	for(let key in d){
+		const year = key;
+		const subValue = d[key];
+
+		if(subValue !== '...'){
+			subfunctionBudget.push({
+				functionName,
+				subfunctionName,
+				year,
+				value_sub: +subValue.replace(/,/g, '')
+			})
+		}
+	}
+
+	return subfunctionBudget;
 	
 }
 
 export {
 	parseColorCode,
 	parseNormalisedData,
-	parseActualData
+	parseActualData,
+	parseSubfunctionData
 }

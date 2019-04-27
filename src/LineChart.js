@@ -4,14 +4,9 @@ import{
 	nest, sum, select
 } from 'd3';
 
+var isSelected = false;
 
 function drawNormalisedLineChart(rootDOM,data){ 
-	
-	//get the width & height of DOM element
-	// console.group('dataInNormalisedFunction');
-	// console.log(data);
-	// console.groupEnd();
-
 
 	const W = rootDOM.clientWidth;
 	const H = rootDOM.clientHeight;
@@ -101,6 +96,7 @@ function drawNormalisedLineChart(rootDOM,data){
 			.style('stroke-width','1px')
 			.style('fill','#f2a829')
 
+
 		//hover over dots
 		dots.on('mouseover',function(d){
 			//console.log(d);
@@ -130,7 +126,7 @@ function drawNormalisedLineChart(rootDOM,data){
 
 		dots.on('mouseout',function(d){
 			d3.select(this)
-				.attr('r',1)
+				.attr('r',2)
 				.style('stroke','white')
 				.style('stroke-width','1px')
 				.style('fill','#f2a829')
@@ -155,6 +151,10 @@ function drawNormalisedLineChart(rootDOM,data){
 			console.log(d.key);
 		})
 		.on('mouseover',function(d){
+			console.log(d);
+			console.log(d3.select(this).style('stroke'));
+		
+		if(isSelected == false) {
 			
 			d3.select(this)
 				.style('cursor','pointer')
@@ -162,6 +162,8 @@ function drawNormalisedLineChart(rootDOM,data){
 					return d.values[0].colorCode
 				})
 				.style('stroke-width','2px');
+		}
+			
 
 			tooltip.transition()
 				.duration(100)
@@ -169,7 +171,7 @@ function drawNormalisedLineChart(rootDOM,data){
 
 			tooltip.html(function(){
 				
-				return "<strong>"  + "Budget Function: " + "</strong>" + "<span style='color:grey'>" + d.key 
+				return "<strong>"  + "Budget Function: " + "</strong>" + "<span style='color:grey'>" + d.values[0].functionFullName 
 
 			})
 				.style('left',(d3.event.pageX) + 'px')
@@ -180,22 +182,17 @@ function drawNormalisedLineChart(rootDOM,data){
 
 	function mouseout(){
 
-		d3.select(this)
+		if(isSelected == false){
+			d3.select(this)
 				.style('stroke','grey')
 				.style('stroke-width','0.4px');
+		}
+		
 
 		tooltip.transition()
 			.duration(200)
 			.style('opacity',0)
 	}
-	
-	// function GetPropertyValue(object, dataToRetrieve) {
-	//     dataToRetrieve.split('.').forEach(function(token) {
-	//       if (object) object = object[token];
-	//     });
-    
- //    	return object;
-	// }
 
 	
 
@@ -262,6 +259,7 @@ function drawActualLineChart(rootDOM,data){
 		//.curve(d3.curveBasis)
 	
 
+	//Build DOM
 	//Append svg & g
 	const plot = d3.select(rootDOM)
 		.append('svg')
@@ -281,7 +279,7 @@ function drawActualLineChart(rootDOM,data){
 	func.append('path')
 		.attr('class','line')
 		.attr('id',d => {
-			return `actual_${d.key}`})
+			return `${d.key}_actual`})
 		.attr('d',function(d){return lineGenerator(d.values)})
 		.style('stroke','grey')
 	
@@ -340,7 +338,7 @@ function drawActualLineChart(rootDOM,data){
 
 		dots.on('mouseout',function(d){
 			d3.select(this)
-				.attr('r',1)
+				.attr('r',2)
 				.style('stroke','white')
 				.style('stroke-width','1px')
 				.style('fill','#4da9de')
@@ -364,8 +362,8 @@ function drawActualLineChart(rootDOM,data){
 			console.log(d.key);
 		})
 		.on('mouseover',function(d){
-			
-			d3.select(this)
+
+				d3.select(this)
 				.style('cursor','pointer')
 				.style('stroke',d => {
 					return d.values[0].colorCode
@@ -378,11 +376,13 @@ function drawActualLineChart(rootDOM,data){
 
 			tooltip.html(function(){
 				
-				return "<strong>"  + "Budget Function: " + "</strong>" + "<span style='color:grey'>" + d.key 
+				return "<strong>"  + "Budget Function: " + "</strong>" + "<span style='color:grey'>" + d.d.values[0].functionFullName
 
 			})
 				.style('left',(d3.event.pageX) + 'px')
 				.style('top',(d3.event.pageY-30) + 'px')
+			
+			
 		})
 		.on('mouseout',mouseout);
 
@@ -409,96 +409,12 @@ function drawActualLineChart(rootDOM,data){
 		.attr('class','axis axis-y')
 		.call(axisY);
 
-
-}
-
-
-function clickButton(data){
-
-	//Click 'Clear' 
-	d3.select('#clear').on('click',function(d){
-		console.log('Clear');
-		d3.selectAll('.line')
-			.style('stroke','grey')
-			.style('stroke-width','0.4px');
-	})
-
-
-	//Click each function button 
-	for(let i=0;i<ui_buttons.length;i++){
-
-		d3.select(`#${ui_buttons[i].btn_id}`).on('click', function(){
-			
-			console.log(`click ${ui_buttons[i].btn_label}`);
-
-			//change the color of clicked button
-		
-			// if(d3.select(this).style('background-color') === 'lightgrey'){
-			// 	d3.select(this)
-			// 		.style('background-color',function(d){
-			// 			return d.values[0].colorCode;
-			// 		})
-			// }else{
-			// 	d3.select(this)
-			// 		.style('background-color','lightgrey')
-					
-			// }
-
-			//change the color of the clicked line
-			if(d3.select(`#${ui_buttons[i].line_key}`).style('stroke') === 'grey'){
-				d3.select(`#${ui_buttons[i].line_key}`)
-					.style('stroke',function(d){
-							return d.values[0].colorCode
-					})
-					.style('stroke-width','2px');
-			}else{
-				d3.select(`#${ui_buttons[i].line_key}`)
-					.style('stroke','grey')
-					.style('stroke-width','0.4px');
-			}
-
-			
-			
-		})
-
-		// var clickTimes = 0;
-
-		// //select button with its id
-		// d3.select(`#${ui_buttons[i].btn_id}`).on('click', function(){
-			
-		
-			
-
-		// 	// Determine if current line is visible
-		// 	clickTimes++;
-
-		// 	if(clickTimes%2 !== 0){
-
-		// 		d3.select(`#${ui_buttons[i].line_key}`)//select the normalised line with its id
-		// 		.style('stroke',d => {
-		// 			console.log(d.values[0].colorCode);
-
-		// 			return d.values[0].colorCode})
-		// 		.style('stroke-width','2px');
-
-		// 	}else{
-
-		// 		d3.select(`#${ui_buttons[i].line_key}`)
-		// 			.style('stroke','grey')
-		// 			.style('stroke-width','0.4px');
-		// 	}
-		
-		
-		// })
-
-	}
 }
 
 
 
 export {
 	drawNormalisedLineChart,
-	drawActualLineChart,
-	clickButton
+	drawActualLineChart
 };
 
